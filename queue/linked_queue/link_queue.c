@@ -136,3 +136,18 @@ int link_queue_out(link_queue_t *q, int *val)
     data_node_deinit(node);
     return 0;
 }
+
+int get_queue_size(link_queue_t *q)
+{
+    return q->queue_size;
+}
+
+int get_queue_en_size(link_queue_t *q)
+{
+    return q->queue_count;
+}
+
+int get_queue_remain(link_queue_t *q)
+{
+    return (q->queue_size - q->queue_count);
+}
