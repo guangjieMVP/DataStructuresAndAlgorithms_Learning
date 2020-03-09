@@ -11,17 +11,17 @@
 #include "string.h"
 #include "stdlib.h"
 
-int is_stack_empty(link_stack_t *s)
+static int is_stack_empty(link_stack_t *s)
 {
     return (s->stack_count == 0);
 }
 
-int is_stack_full(link_stack_t *s)
+static int is_stack_full(link_stack_t *s)
 {
     return ( s->stack_count >= s->stack_size );
 }
 
-data_node_t *data_node_init(int data)
+static data_node_t *data_node_init(int data)
 {
     data_node_t *d = (data_node_t *)malloc(sizeof(data_node_t));
     if(!d)
@@ -32,7 +32,7 @@ data_node_t *data_node_init(int data)
     return d;
 }
 
-int data_node_deinit(data_node_t *data_node)
+static int data_node_deinit(data_node_t *data_node)
 {
     if(!data_node)
         return -1;
