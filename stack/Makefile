@@ -3,3 +3,5 @@ OBJ := stack
 
 $(OBJ) : $(SRC)
 	gcc -o $(OBJ) $(SRC)
+clean : 
+	rm -rf *.o $(OBJ)
