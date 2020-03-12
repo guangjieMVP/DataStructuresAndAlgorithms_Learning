@@ -13,11 +13,17 @@
 
 static int is_stack_empty(link_stack_t *s)
 {
+    if(!s)
+        return 0;
+
     return (s->stack_count == 0);
 }
 
 static int is_stack_full(link_stack_t *s)
 {
+    if(!s)
+        return 0;
+
     return ( s->stack_count >= s->stack_size );
 }
 
@@ -45,7 +51,7 @@ static int data_node_deinit(data_node_t *data_node)
 
 int link_stack_init(link_stack_t *s, int stack_size)
 {
-    if(!s)
+    if(!s || stack_size <= 0)
         return -1;
 
     s->top         = NULL;
@@ -77,14 +83,11 @@ int link_stack_deinit(link_stack_t *s)
 
 int link_stack_push(link_stack_t *s, int val)
 {
-    if(!s)
+    if(!s || is_stack_full(s))
         return -1;
 
     data_node_t *d = data_node_init(val);
     if(!d)
-        return -1;
-
-    if(is_stack_full(s))
         return -1;
 
     if(is_stack_empty(s))
@@ -107,10 +110,7 @@ int link_stack_pop(link_stack_t *s, int *val)
 {
     data_node_t *node;
 
-    if(!s)
-        return -1;
-
-    if(is_stack_empty(s))
+    if(!s || is_stack_empty(s) || !val)
         return -1;
 
     node   = s->top;

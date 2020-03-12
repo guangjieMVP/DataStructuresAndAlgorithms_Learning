@@ -1,22 +1,21 @@
-/**
-  * @file:     stack.c
-  * @author:   guangjieMVP
-  * @github:              
-  * @version:  v1.0.0
-  * @date:     2020-xx-xx
-  * @brief:    Array implementation of stacks           
-*/
+
 
 #include "stack.h"
 
-static int is_stack_full(stack_t *stack)
+static int is_stack_full(stack_t *s)
 {
-    return (stack->top >= (stack->size - 1));
+    if(!s)
+        return 0;
+
+    return (s->top >= (s->size - 1));
 }
 
-static int is_stack_empty(stack_t *stack)
+static int is_stack_empty(stack_t *s)
 {
-    return (stack->top == STACK_IS_EMPTY);
+    if(!s)
+        return 0;
+
+    return (s->top == STACK_IS_EMPTY);
 }
 /**
   * @brief:         initilize a stack
@@ -25,20 +24,24 @@ static int is_stack_empty(stack_t *stack)
   * @note:            
   * @author:        guangjieSuper
 */
-int stack_init( stack_t *stack, int *stack_buffer, int size )
+int stack_init( stack_t *s, int *stack_buffer, int size )
 {
-    stack->stack_buf = stack_buffer;
-    stack->size      = size;
-    stack->top       = -1;
+    if(!s || !stack_buffer || size <= 0)
+        return -1;
+
+    s->stack_buf = stack_buffer;
+    s->size      = size;
+    s->top       = -1;
     return 0;
 }
 
-int stack_push(stack_t *stack,int data)
+int stack_push(stack_t *s,int data)
 {
-    if(is_stack_full(stack))
+    if(is_stack_full(s))
         return -1;
-    stack->top++;
-    stack->stack_buf[stack->top] = data;
+
+    s->top++;
+    s->stack_buf[s->top] = data;
     return 0;
 }
 
@@ -50,12 +53,13 @@ int stack_push(stack_t *stack,int data)
   * @author:        guangjieSuper
   * @version:       v1.0.0
 */
-int stack_pop(stack_t *stack, int *data)
+int stack_pop(stack_t *s, int *data)
 {
-    if(is_stack_empty(stack))
+    if(is_stack_empty(s) || !data)
         return -1;
-    *data = stack->stack_buf[stack->top];
-    stack->top--;
+
+    *data = s->stack_buf[s->top];
+    s->top--;
     return 0;
 }
 

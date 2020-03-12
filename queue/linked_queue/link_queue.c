@@ -46,7 +46,7 @@ static int data_node_deinit(data_node_t *data_node)
 
 int link_queue_init(link_queue_t *q, int queue_size)
 {
-    if(!q)
+    if(!q || queue_size <= 0)
         return -1;
 
     q->front       = NULL;
@@ -87,14 +87,11 @@ int link_queue_deinit(link_queue_t *q)
 **************************************************************************/
 int link_queue_en(link_queue_t *q, int val)
 {
-    if(!q)
+    if(!q || is_queue_full(q))
         return -1;
 
     data_node_t *d = data_node_init(val);
     if(!d)
-        return -1;
-
-    if(is_queue_full(q))
         return -1;
 
     if(is_queue_empty(q))
@@ -123,10 +120,7 @@ int link_queue_out(link_queue_t *q, int *val)
 {
     data_node_t *node;
 
-    if(!q)
-        return -1;
-
-    if(is_queue_empty(q))
+    if(!q || is_queue_empty(q))
         return -1;
 
     node     = q->front;
